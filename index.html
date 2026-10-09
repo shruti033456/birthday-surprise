@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Birthday Surprise 🎀</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- ================= MUSIC ================= -->
+
+    <audio id="bgMusic" loop>
+        <source src="blue.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="musicBtn" class="music-btn" onclick="toggleMusic()">
+        🎵
+    </button>
+
+
+    <!-- ================= INTRO ================= -->
+
+    <section id="introScreen" class="screen active">
+
+        <div class="card intro-card">
+
+            <div class="cute-top">
+                ♡ ✦ ♡
+            </div>
+
+            <div class="envelope">
+                💌
+            </div>
+
+            <p class="small-text">
+                A LITTLE SOMETHING FOR YOU
+            </p>
+
+            <h1>
+                Hey, Birthday Girl! 🎀
+            </h1>
+
+            <p class="message">
+                I made a tiny little surprise for you...
+                <br>
+                but you'll have to play along first. 👀
+            </p>
+
+            <div class="question-preview">
+                <span>♡</span>
+                <span>✦</span>
+                <span>♡</span>
+            </div>
+
+            <p class="tiny-note">
+                There are questions, surprises and absolutely no cheating. 🤨
+            </p>
+
+            <div class="buttons">
+
+                <button class="yes-btn" onclick="startQuiz()">
+                    Open it! 💗
+                </button>
+
+                <button class="no-btn" id="noBtn">
+                    No thanks 😭
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUIZ ================= -->
+
+    <section id="quizScreen" class="screen">
+
+        <div class="card quiz-card">
+
+            <p class="small-text" id="roundText">
+                ROUND 1
+            </p>
+
+            <h1 id="questionNumber">
+                Question 1 of 4
+            </h1>
+
+            <div class="progress-container">
+                <div id="progressBar"></div>
+            </div>
+
+            <h2 id="question">
+                Question goes here
+            </h2>
+
+            <div id="answers" class="answers">
+            </div>
+
+            <p id="feedback" class="feedback">
+            </p>
+
+            <p class="score">
+                Score:
+                <span id="scoreText">0</span>
+            </p>
+
+            <button
+                id="nextBtn"
+                class="yes-btn"
+                onclick="nextQuestion()"
+                style="display: none;"
+            >
+                Next 💗
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= VIDEO ================= -->
+
+    <section id="videoScreen" class="screen">
+
+        <div class="card video-card">
+
+            <p class="small-text">
+                A LITTLE SURPRISE 🎬
+            </p>
+
+            <h1>
+                Before you continue... 👀
+            </h1>
+
+            <p class="message">
+                I think you should watch this first. 💌
+            </p>
+
+            <video
+                id="birthdayVideo"
+                class="birthday-video"
+                controls
+                onplay="setVideoVolume()"
+            >
+
+                <source src="birthday.mp4" type="video/mp4">
+
+                Your browser does not support this video.
+
+            </video>
+
+            <button
+                class="yes-btn"
+                onclick="continueFromVideo()"
+            >
+                Continue 💗
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= GAME INTRO ================= -->
+
+    <section id="gameIntro" class="screen">
+
+        <div class="card">
+
+            <div class="envelope">
+                💕
+            </div>
+
+            <p class="small-text">
+                ONE LAST THING
+            </p>
+
+            <h1>
+                Catch the Hearts! 💗
+            </h1>
+
+            <p class="message">
+                There are 15 seconds on the clock.
+                <br>
+                Catch 10 hearts to unlock your final surprise.
+            </p>
+
+            <button
+                class="yes-btn"
+                onclick="startGame()"
+            >
+                Let's go! 💕
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= HEART GAME ================= -->
+
+    <section id="gameScreen" class="screen">
+
+        <div class="card game-card">
+
+            <div class="game-info">
+
+                <div>
+                    Hearts:
+                    <span id="heartScore">0</span>
+                </div>
+
+                <div>
+                    Time:
+                    <span id="timer">15</span>
+                </div>
+
+            </div>
+
+            <h1>
+                Catch them! 💗
+            </h1>
+
+            <div id="gameArea">
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FINAL SCREEN ================= -->
+
+    <section id="finalScreen" class="screen">
+
+        <div class="card final-card">
+
+            <div class="final-sparkles">
+                ✦ ♡ ✦
+            </div>
+
+            <div class="envelope">
+                🎂
+            </div>
+
+            <p class="small-text">
+                YOU MADE IT!
+            </p>
+
+            <h1>
+                HAPPY BIRTHDAY! 🎀
+            </h1>
+
+            <p class="final-subtitle">
+                But wait... there's one last little surprise. 👀
+            </p>
+
+            <div class="final-results">
+
+                <p>
+                    Quiz score:
+                    <span id="finalScore">0</span> 💗
+                </p>
+
+                <p>
+                    Hearts caught:
+                    <span id="finalHearts">0</span> 💕
+                </p>
+
+            </div>
+
+            <button
+                class="message-btn"
+                onclick="showBirthdayMessage()"
+            >
+                Open your birthday message 💌
+            </button>
+
+
+            <!-- ================= BIRTHDAY MESSAGE ================= -->
+
+            <div
+                id="birthdayMessage"
+                class="birthday-message"
+            >
+
+                <div class="letter">
+
+                    <div class="letter-top">
+                        ♡ ✦ ♡
+                    </div>
+
+                    <h2>
+                        For You 💗
+                    </h2>
+
+
+                    <div class="message-text">
+
+                        <p>
+                            Hey Srutismritee! First of all, wishing you a HAPPIEST BIRTHDAY! 🎂💗
+                        </p>
+
+                        <p>
+                            I don't have any clear memories of 4th, nor do I want to recall the memories of 8th to 10th, but ig it was a slow-burn romance-like trope when I finally fell in love with you in 11th.
+                        </p>
+
+                        <p>
+                            I mean, you are literally the sweetest and cutest person ever. You are good at everything, like literally good at everything. I just love how crazy we are, and the best part is, even though we meet at school, we eventually end up texting each other again.
+                        </p>
+
+                        <p>
+                            If I were a boy, I would have surely fallen for you so hard, and even though you would have rejected me, I would have still tried my BEST!
+                        </p>
+
+                        <p>
+                            So, Sruti, I don't know if you really find me as one of the most trustworthy friends or not, but for me, you are my ONE AND ONLY. Tbh, you are the only soul I can talk to without overthinking, the only person who can judge me, and the only person where the word "best friend" just fits perfectly. 💗
+                        </p>
+
+                        <p>
+                            Even at your hardest times, I promise I will stand beside you. Even if you are wrong, I am gonna support you till the end.
+                        </p>
+
+                        <p>
+                            May our bond become stronger each day, and may we make more ridiculous memories together!
+                        </p>
+
+                        <p>
+                            Sending you loads of love and wishes! 💕
+                        </p>
+
+                        <p>
+                            Happy, Happier and Happiest birthday to my LOVE! ♡
+                        </p>
+
+                    </div>
+
+
+                    <div class="letter-bottom">
+                        ♡ Happy Birthday ♡
+                    </div>
+
+                </div>
+                
+<!-- FRIENDSHIP CERTIFICATE -->
+
+<div id="certificateSection" class="certificate-section">
+
+    <div class="certificate">
+
+        <p class="certificate-stars">✦ ♡ ✦ ♡ ✦</p>
+
+        <p class="certificate-small">
+            OFFICIALLY AWARDED TO
+        </p>
+
+        <h2>SRUTISMRITEE 🎀</h2>
+
+        <div class="certificate-line"></div>
+
+        <p class="certificate-text">
+            This certificate proudly confirms that
+        </p>
+
+        <h3>SRUTISMRITEE</h3>
+
+        <p class="certificate-text">
+            has officially qualified as an absolutely
+            wonderful human, professional chaos partner,
+            and certified best friend. ♡
+        </p>
+
+        <div class="certificate-list">
+            <p>✦ Survives my nonsense</p>
+            <p>✦ Creates unnecessary chaos</p>
+            <p>✦ Makes ridiculous memories</p>
+            <p>✦ Somehow still tolerates me</p>
+            <p>✦ Remains my ONE AND ONLY bestie ♡</p>
+        </div>
+
+        <div class="certificate-status">
+            <p>FRIENDSHIP STATUS</p>
+            <strong>PERMANENTLY LOCKED 🔒💗</strong>
+        </div>
+
+        <div class="certificate-details">
+            <p><b>Issued by:</b> Golu</p>
+            <p><b>Valid until:</b> Never</p>
+            <p><b>Certificate ID:</b> GOLU-SRUTI-FOREVER-01</p>
+        </div>
+
+        <div class="certificate-seal">
+            CERTIFIED
+            <span>♡</span>
+        </div>
+
+        <p class="certificate-footer">
+            No refunds. No cancellations. No replacements. 😌
+        </p>
+
+        <button class="yes-btn" onclick="acceptCertificate()">
+            Accept my certificate 🥹💗
+        </button>
+
+    </div>
+</div>
+
+<!-- FINAL GOODBYE -->
+
+<div id="certificateEnding" class="certificate-ending">
+    <div class="card">
+        <div class="envelope">💗</div>
+        <h1>Friendship successfully saved! ✨</h1>
+        <p class="message">
+            You may now return to being idiots together.
+        </p>
+        <div class="ending-hearts">♡ ✦ ♡ ✦ ♡</div>
+    </div>
+</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CONFETTI ================= -->
+
+    <div id="confetti-container">
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
