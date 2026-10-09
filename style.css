@@ -277,3 +277,25 @@ video {
     border-radius: 23px;
   }
 }
+
+.answer-btn.float-away {
+  animation: floatAway 0.8s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes floatAway {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translate(35px, -25px) rotate(12deg);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(180px, -100px) rotate(35deg);
+    opacity: 0;
+  }
+}
