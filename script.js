@@ -1,3 +1,4 @@
+
 const music = document.getElementById("backgroundMusic");
 const video = document.getElementById("birthdayVideo");
 
@@ -12,7 +13,6 @@ const questions = [
     options: ["Golu", "dustbin", "big dustbin", "lone pair"],
     answer: "Golu"
   },
- 
   {
     question: "What's the best plan for today?",
     options: [
@@ -46,7 +46,7 @@ function startMusic() {
   music.volume = 0.15;
 
   music.play().catch(() => {
-    // Music may need a user interaction before playing.
+    // Music may need a user interaction first.
   });
 }
 
@@ -73,34 +73,51 @@ function showQuestion() {
     const button = document.createElement("button");
 
     button.className = "option";
+    button.type = "button";
     button.textContent = optionText;
 
     button.addEventListener("click", () => {
-      checkAnswer(optionText);
+      checkAnswer(optionText, button);
     });
 
     optionsBox.appendChild(button);
   });
 }
 
-function checkAnswer(selected) {
+function checkAnswer(selected, button) {
   const feedback = document.getElementById("quizFeedback");
 
   if (selected !== questions[questionIndex].answer) {
-    feedback.textContent = "Not quite! Try again 💗";
+    feedback.textContent = "WRONG ANSWER! CATCH IT IF YOU CAN! 💨";
+
+    button.classList.add("float-away");
+    button.disabled = true;
+
+    button.addEventListener("animationend", () => {
+      button.remove();
+    }, { once: true });
+
     return;
   }
 
-  questionIndex++;
+  feedback.textContent = "YAYYY! YOU GOT IT RIGHT! 💗";
 
-  if (questionIndex < questions.length) {
-    showQuestion();
-  } else {
-    music.pause();
-    showScreen("videoScreen");
-    video.currentTime = 0;
-    video.volume = 1;
-  }
+  document.querySelectorAll("#answerOptions .option").forEach(option => {
+    option.disabled = true;
+  });
+
+  setTimeout(() => {
+    questionIndex++;
+
+    if (questionIndex < questions.length) {
+      showQuestion();
+    } else {
+      music.pause();
+      showScreen("videoScreen");
+      video.currentTime = 0;
+      video.volume = 1;
+    }
+  }, 700);
 }
 
 video.addEventListener("play", () => {
@@ -134,12 +151,10 @@ function startGame() {
   showScreen("gameScreen");
 
   spawnHeart();
-
   heartSpawner = setInterval(spawnHeart, 650);
 
   gameTimer = setInterval(() => {
     timeLeft--;
-
     document.getElementById("timeLeft").textContent = timeLeft;
 
     if (timeLeft <= 0) {
@@ -173,7 +188,6 @@ function spawnHeart() {
     if (gameFinished) return;
 
     heartsCaught++;
-
     document.getElementById("heartCount").textContent = heartsCaught;
 
     heart.remove();
